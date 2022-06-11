@@ -1,20 +1,35 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract UnchainedIndex {
+contract UnchainedIndex_V2 {
     constructor() {
         owner = msg.sender;
-        chainToHash[
+        manifestHashMap[msg.sender][
             "mainnet"
         ] = "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"; // empty file
-        emit HashPublished("mainnet", chainToHash["mainnet"]);
+        emit HashPublished(
+            msg.sender,
+            "mainnet",
+            manifestHashMap[msg.sender]["mainnet"]
+        );
         emit OwnerChanged(address(0), owner);
     }
 
     function publishHash(string memory chain, string memory hash) public {
-        require(msg.sender == owner, "msg.sender must be owner");
-        chainToHash[chain] = hash;
-        emit HashPublished(chain, hash);
+        manifestHashMap[msg.sender][chain] = hash;
+        emit HashPublished(msg.sender, chain, hash);
+    }
+
+    function readHash(address publisher, string memory chain)
+        public
+        view
+        returns (string memory)
+    {
+        return manifestHashMap[publisher][chain];
+    }
+
+    function getOwner() public view returns (address) {
+        return owner;
     }
 
     function changeOwner(address newOwner) public returns (address oldOwner) {
@@ -31,14 +46,10 @@ contract UnchainedIndex {
         payable(owner).transfer(address(this).balance);
     }
 
-    function readHash(string memory chain) public view returns (string memory) {
-        return chainToHash[chain];
-    }
-
-    event HashPublished(string chain, string hash);
+    event HashPublished(address publisher, string chain, string hash);
     event OwnerChanged(address oldOwner, address newOwner);
     event DonationSent(address from, uint256 amount, uint256 ts);
 
-    mapping(string => string) public chainToHash;
+    mapping(address => mapping(string => string)) public manifestHashMap;
     address public owner;
 }

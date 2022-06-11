@@ -1,6 +1,6 @@
 # The Unchained Index
 
-The unchained index smart contract
+The UnchainedIndex is a smart contract that accomplishes an extremely simple task. It allows anyone to publish an IPFS hash pointing to any file. That's all it does.
 
 ## Building
 
