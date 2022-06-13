@@ -4,6 +4,8 @@ pragma solidity ^0.8.13;
 contract UnchainedIndex_V2 {
     constructor() {
         owner = msg.sender;
+        emit OwnerChanged(address(0), owner);
+
         manifestHashMap[msg.sender][
             "mainnet"
         ] = "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"; // empty file
@@ -12,26 +14,19 @@ contract UnchainedIndex_V2 {
             "mainnet",
             manifestHashMap[msg.sender]["mainnet"]
         );
-        emit OwnerChanged(address(0), owner);
     }
 
+    // Note: this is purposefully permissionless. Anyone may publish a hash
+    // and anyone my query that hash by a given publisher. This is by design.
+    // End users themselves must determine who to believe. We suggest it's us,
+    // but who's to say?
     function publishHash(string memory chain, string memory hash) public {
         manifestHashMap[msg.sender][chain] = hash;
         emit HashPublished(msg.sender, chain, hash);
     }
 
-    function readHash(address publisher, string memory chain)
-        public
-        view
-        returns (string memory)
-    {
-        return manifestHashMap[publisher][chain];
-    }
-
-    function getOwner() public view returns (address) {
-        return owner;
-    }
-
+    // If, at a certain point, we decide to disable or redirect donations. Otherwise,
+    // owner no other purpose. "isOwner isAMistake!"
     function changeOwner(address newOwner) public returns (address oldOwner) {
         require(msg.sender == owner, "msg.sender must be owner");
         oldOwner = owner;

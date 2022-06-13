@@ -11,25 +11,29 @@ contract UnchainIndexTest is Test {
         unchained = new UnchainedIndex_V2();
     }
 
-    function testOwner() public {
-        console.log(unchained.getOwner());
+    function testOwner() public view {
+        console.log(unchained.owner());
     }
 
     function testRead() public {
         assertEq(
-            unchained.readHash(unchained.getOwner(), "mainnet"),
+            unchained.manifestHashMap(unchained.owner(), "mainnet"),
             "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
         );
         unchained.publishHash("sepolia", "12");
-        assertEq(unchained.readHash(unchained.getOwner(), "sepolia"), "12");
+        assertEq(unchained.manifestHashMap(unchained.owner(), "sepolia"), "12");
         assertEq(
-            unchained.readHash(unchained.getOwner(), "mainnet"),
+            unchained.manifestHashMap(unchained.owner(), "mainnet"),
             "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
         );
     }
 
     function testWrite() public {
         unchained.publishHash("sepolia", "12");
-        assertEq(unchained.readHash(unchained.getOwner(), "sepolia"), "12");
+        assertEq(unchained.manifestHashMap(unchained.owner(), "sepolia"), "12");
+        assertEq(
+            unchained.manifestHashMap(unchained.owner(), "mainnet"),
+            "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
+        );
     }
 }
