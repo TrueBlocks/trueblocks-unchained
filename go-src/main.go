@@ -8,8 +8,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/ethereum/go-ethereum"
@@ -38,12 +40,28 @@ func main() {
 	// We need the address of the smart contract
 	address := common.HexToAddress("0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
 
+	// chain := "mainnet"
+	// if len(os.Args) > 1 {
+	// 	chain = os.Args[1]
+	// }
+
+	chain := "mainnet"
+	if len(os.Args) > 1 {
+		chain = os.Args[1]
+	}
+
 	// And here we make the call
+	encoding := "7087e4bd"
+	addr := "000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+	loc := "0000000000000000000000000000000000000000000000000000000000000040"
+	strLen := fmt.Sprintf("%0.64d", len(chain))
+	str := fmt.Sprintf("%-0.64x", chain) //"6d61696e6e657400000000000000000000000000000000000000000000000000"
+	input := "0x" + encoding + addr + loc + strLen + str
 	response, err := ethClient.CallContract(
 		context.Background(),
 		ethereum.CallMsg{
 			To:   &address,
-			Data: rpcClient.DecodeHex("0x7087e4bd00000000000000000000000002f2b09b33fdbd406ead954a31f98bd29a2a3492000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000076d61696e6e657400000000000000000000000000000000000000000000000000"),
+			Data: rpcClient.DecodeHex(input),
 		},
 		nil,
 	)
@@ -63,6 +81,6 @@ func main() {
 	if len(result) == 0 {
 		fmt.Println(errors.New("contract returned empty data"))
 	} else {
-		fmt.Println(result[0].(string))
+		log.Printf("%s%s %s %s%s %s%s\n", colors.BrightBlue, "Unchained", chain, "manifest", colors.BrightGreen, result[0].(string), colors.Off)
 	}
 }
