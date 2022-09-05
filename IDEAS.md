@@ -8,11 +8,17 @@
 
 ### Would be nice
 
-- A value called 'upgradedTo' that accepts an address and stays empty until the owner sets it. If non-empty, all functions are disabled (through a require) and the value points to the upgraded contract
+- A value called 'upgradedTo' that accepts an address and stays empty until the owner sets it. 
+  - If non-empty, all functions are disabled (through a require) and the value points to the upgraded contract
 - Marketing material surrounding the idea that this hash is the cheapest possible way to publish access to the entire chain's index
 - Allow others to submit names files for possible inclusion in the names database
+- Expansion to accept a 'reason' string which can take on any value
+  - index-manifest
+  - timestamps
+  - names
+  - abis
 
-### Usage
+   ### Usage
 
 Anyone may publish. The map records hashes per chain per address. This means anyone can be their own publisher.
 
