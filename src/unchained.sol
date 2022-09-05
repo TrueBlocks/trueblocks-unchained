@@ -17,9 +17,9 @@ contract UnchainedIndex_V2 {
     }
 
     // Note: this is purposefully permissionless. Anyone may publish a hash
-    // and anyone my query that hash by a given publisher. This is by design.
-    // End users themselves must determine who to believe. We suggest it's us,
-    // but who's to say?
+    // and anyone may query that hash by any publisher. This is by design.
+    // End users themselves must determine which publisher they want to
+    // believe. We suggest it should be us, but your milage may vary.
     function publishHash(string memory chain, string memory hash) public {
         manifestHashMap[msg.sender][chain] = hash;
         emit HashPublished(msg.sender, chain, hash);
