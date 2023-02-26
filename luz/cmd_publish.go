@@ -1,0 +1,12 @@
+package main
+
+func Publish(theChain string) {
+	// ethClient := rpcClient.GetClient(config.GetRpcProvider("mainnet"))
+	// defer ethClient.Close()
+
+	// address := common.HexToAddress("0x0c316b7042b419d07d343f2f4f5bd54ff731183d")
+	// chain := "mainnet"
+
+	// encoding := "7087e4bd"
+	// publisher := "000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+}
