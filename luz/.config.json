@@ -1,6 +1,6 @@
 {
  "commands": {
-  "lastValue": "get",
+  "lastValue": "add-name",
   "canAdd": false,
   "values": [
    {
