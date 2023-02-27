@@ -1,6 +1,6 @@
 {
  "commands": {
-  "lastValue": "add-name",
+  "lastValue": "get",
   "canAdd": false,
   "values": [
    {
@@ -42,7 +42,7 @@
   ]
  },
  "databases": {
-  "lastValue": "mainnet-ts",
+  "lastValue": "mainnet",
   "canAdd": true,
   "values": [
    {
