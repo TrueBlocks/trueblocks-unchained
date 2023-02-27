@@ -1,32 +1,41 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/c-bata/go-prompt"
 )
 
 func getChain() string {
 	userPrompt("Choose a chain", lastChain())
-	val := prompt.Input("> ", chainOptions)
-	if val == "quit" {
+	optionsPtr = &theConfig.Chains
+	filterFunc = nil
+	val := prompt.Input("> ", getOptions)
+	if isQuit(val) {
 		os.Exit(0)
-	}
-	if val == "" {
+	} else if isHelp(val) {
+		msg := "Type the name of the chain you want to use."
+		fmt.Printf("%s%s%s\n", colors.BrightGreen, msg, colors.Off)
+		return getChain()
+	} else if val == "" {
 		val = lastChain()
 	}
+
+	NoteConfigValue("chain", val)
 	return val
 }
 
 func lastChain() string {
-	return "mainnet"
+	return theConfig.Chains.LastValue
 }
 
-func chainOptions(d prompt.Document) []prompt.Suggest {
-	var s = []prompt.Suggest{
+var defaultChains = Options{
+	LastValue: "mainnet",
+	CanAdd:    true,
+	Values: []option{
 		{Text: "mainnet", Description: "Ethereum mainnet"},
 		{Text: "sepolia", Description: "the Sepolia testnet"},
-		{Text: "quit", Description: "quit this tool"},
-	}
-	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
+	},
 }

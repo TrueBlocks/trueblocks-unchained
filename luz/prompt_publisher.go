@@ -4,29 +4,37 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/c-bata/go-prompt"
 )
 
 func getPublisher() string {
 	userPrompt("Choose a publisher", lastPublisher())
-	val := prompt.Input("> ", publisherOptions)
-	if val == "quit" {
+	optionsPtr = &theConfig.Publishers
+	filterFunc = nil
+	val := prompt.Input("> ", getOptions)
+	if isQuit(val) {
 		os.Exit(0)
-	}
-	if val == "" {
+	} else if isHelp(val) {
+		msg := "Enter the name of the publisher you'd like to read from or write from."
+		fmt.Printf("%s%s%s\n", colors.BrightGreen, msg, colors.Off)
+		return getPublisher()
+	} else if val == "" {
 		val = lastPublisher()
 	}
-	return fmt.Sprintf("%064s", val)
+
+	NoteConfigValue("publishers", val)
+	return val
 }
 
 func lastPublisher() string {
-	return "f503017d7baf7fbc0fff7492b751025c6a78179b"
+	return theConfig.Publishers.LastValue
 }
 
-func publisherOptions(d prompt.Document) []prompt.Suggest {
-	var s = []prompt.Suggest{
-		{Text: "f503017d7baf7fbc0fff7492b751025c6a78179b", Description: "trueblocks.eth"},
-		{Text: "quit", Description: "quit this tool"},
-	}
-	return prompt.FilterHasPrefix(s, d.GetWordBeforeCursor(), true)
+var defaultPublishers = Options{
+	LastValue: "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+	CanAdd:    true,
+	Values: []option{
+		{Text: "0xf503017d7baf7fbc0fff7492b751025c6a78179b", Description: "trueblocks.eth"},
+	},
 }

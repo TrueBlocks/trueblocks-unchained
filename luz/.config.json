@@ -1,0 +1,78 @@
+{
+ "commands": {
+  "lastValue": "get",
+  "canAdd": false,
+  "values": [
+   {
+    "text": "get",
+    "description": "retrieve the latest value of the manifest hash"
+   },
+   {
+    "text": "publish",
+    "description": "publish the manifest hash"
+   },
+   {
+    "text": "add-name",
+    "description": "add a name to the names database"
+   }
+  ]
+ },
+ "chains": {
+  "lastValue": "mainnet",
+  "canAdd": true,
+  "values": [
+   {
+    "text": "mainnet",
+    "description": "Ethereum mainnet"
+   },
+   {
+    "text": "sepolia",
+    "description": "the Sepolia testnet"
+   }
+  ]
+ },
+ "publishers": {
+  "lastValue": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+  "canAdd": true,
+  "values": [
+   {
+    "text": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+    "description": "trueblocks.eth"
+   }
+  ]
+ },
+ "databases": {
+  "lastValue": "mainnet-ts",
+  "canAdd": true,
+  "values": [
+   {
+    "text": "mainnet",
+    "description": "IPFS hash for mainnet manifest"
+   },
+   {
+    "text": "mainnet-ts",
+    "description": "IPFS hash for mainnet timestamps database"
+   },
+   {
+    "text": "sepolia",
+    "description": "IPFS hash for sepolia manifest"
+   },
+   {
+    "text": "sepolia-ts",
+    "description": "IPFS hash for sepolia timestamps database"
+   },
+   {
+    "text": "names",
+    "description": "user-entered value"
+   },
+   {
+    "text": "gnosis",
+    "description": "user-entered value"
+   },
+   {
+    "text": "gnosis-ts",
+    "description": "user-entered value"
+   }
+  ]
+ }
+}

@@ -1,6 +1,16 @@
 package main
 
-func Publish(theChain string) {
+import (
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
+)
+
+func Publish() {
+	// theChain := getChain()
+	theDatabase := colors.BrightBlue + getDatabase() + colors.Off
+	thePublisher := colors.BrightBlue + getPublisher() + colors.Off
+	fmt.Println("Publishing", theDatabase, "database from", thePublisher, "publisher")
 	// ethClient := rpcClient.GetClient(config.GetRpcProvider("mainnet"))
 	// defer ethClient.Close()
 
